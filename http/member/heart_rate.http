@@ -1,0 +1,10 @@
+@DNS_HOST = localhost:8080
+
+### Save Heart Rate
+POST {{DNS_HOST}}/api/v1/heart-rate
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "heartRate": 80
+}

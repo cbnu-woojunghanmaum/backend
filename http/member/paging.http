@@ -1,0 +1,5 @@
+@DNS_HOST = localhost:8080
+
+### 로그인 아이디로 검색 - Admin 권한만 가능
+GET {{DNS_HOST}}/api/v1/member/cursor-paging
+Authorization: Bearer {{auth_token}}

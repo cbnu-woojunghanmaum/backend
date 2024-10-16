@@ -1,0 +1,5 @@
+@DNS_HOST = https://cj-api.serial-blog.com
+
+### 로그인 아이디로 검색 - Admin 권한만 가능
+GET {{DNS_HOST}}/api/v1/member/cursor-paging
+Authorization: Bearer {{auth_token}}

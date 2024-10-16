@@ -1,0 +1,101 @@
+@DNS_HOST = https://cj-api.serial-blog.com
+
+### Sign Up
+POST {{DNS_HOST}}/api/v1/member/signup
+Content-Type: application/json
+
+{
+  "loginId": "asdf123456",
+  "password": "asdf12345@",
+  "phone": "010-1234-1234",
+  "gender": "FEMALE",
+  "email": "sdf7@gmail.com",
+  "employeeName": "홍길동",
+  "year": 2000,
+  "month": 1,
+  "day": 1
+}
+
+### Sign Up2
+POST {{DNS_HOST}}/api/v1/member/signup
+Content-Type: application/json
+
+{
+  "loginId": "ssdf23",
+  "password": "SSd1234@!",
+  "phone": "010-1234-1234",
+  "gender": "FEMALE",
+  "email": "sdsf@gmail.com",
+  "employeeName": "홍길동",
+  "year": 2021,
+  "month": 1,
+  "day": 1
+}
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "asdf123456",
+  "password": "asdf12345@",
+  "token": "cUKqqTxtRJmpwFeEP8YMIg:APA91bFqCvtjaHChoCZ83UMt7_gnTwKwgPSM3OC1JT_b11F66gTSYgqMc9LGO_jgkt9b1qCYwGuXvBw-ue1UHV65yfKzvGlOpLv70AqcPiMaN82mQwWSMpCcPM1qMgKdk0tVG6rm6H3t"
+}
+
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### Login2
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "ssdf23",
+  "password": "SSd1234@!"
+}
+
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+
+### Authorization by token
+GET {{DNS_HOST}}/api/v1/check/employee
+Authorization: Bearer {{auth_token}}
+
+### Authorization by token
+GET {{DNS_HOST}}/api/v1/check/admin
+Authorization: Bearer {{auth_token}}
+
+### 로그인 아이디로 검색 - Admin 권한만 가능
+GET {{DNS_HOST}}/api/v1/member/search?loginId=ssdf23
+Authorization: Bearer {{auth_token}}
+
+### 로그인 아이디 중복 체크
+GET {{DNS_HOST}}/api/v1/member/check/login-id?loginId=ssdf22
+
+
+### FCM Push
+POST {{DNS_HOST}}/api/v1/fcm/emergency-alarm?x=123&y=129&emergency=HEART_RATE
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 본인 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/employee/emergency-report?start=2024-07-15&end=2024-07-20
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 본인 심박수 집계
+GET {{DNS_HOST}}/api/v1/heart-rate/aggregate?start=2024-07-15 00:00:00&end=2024-08-06 00:00:00
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+
+### 본인 심박수 집계
+GET {{DNS_HOST}}/api/v1/reporting/search?name=김정직
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### step-count 저장
+POST {{DNS_HOST}}/api/v1/reporting/step-count?step=10
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

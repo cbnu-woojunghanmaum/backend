@@ -1,0 +1,117 @@
+@DNS_HOST = localhost:8080
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "ssdf22",
+  "password": "SSd1234@!",
+  "token": "c31VbLf2QlaITGLwtmbjnm:APA91bGR5kmT3n75oqMyhIvCjzd0CH8ss3ZpBPrcNve2AsZDZ8yQCjYzfvwLXuuLtAaFLTxR53teRIEliknPXV4A1IvBEyV31XfroRono9KuZ0V_5V7WmW-Ouet0aRlGGAJ2dvjLCMnG"
+}
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### 회원 심박수 임계치 변경
+PUT {{DNS_HOST}}/api/v1/member/heart-rate-threshold?memberId=2&threshold=112
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report?start=2024-07-15&end=2024-07-20
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 특정 회원 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/2?start=2024-07-15&end=2024-07-20
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 로그인 아이디로 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/search-with-date?loginId=ssdf23&start=2024-07-15&end=2024-07-20
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 로그인 아이디 + 날짜로 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/search?loginId=ssdf23
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 날짜 + 신고 타입 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report-by-type?start=2024-07-15&end=2024-07-20&emergency=REPORT
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 전체 회원 커서 페이징 조회
+GET {{DNS_HOST}}/api/v1/member/cursor-paging
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 직원 심박수 집계
+GET {{DNS_HOST}}/api/v1/heart-rate/aggregate/1?start=2024-07-15 00:00:00&end=2024-07-21 00:00:00
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 특정 회원 신고 이력 조회
+GET {{DNS_HOST}}/api/v1/fcm/admin/emergency-report/1?start=2024-07-20&end=2024-07-21
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 상세 조회
+GET {{DNS_HOST}}/api/v1/member/2
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 관리자 전체 조회(이름순)
+GET {{DNS_HOST}}/api/v1/member/admins
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 업데이트
+PUT {{DNS_HOST}}/api/v1/member/manage
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "memberId": 3,
+  "phone": "010-1234-1234",
+  "gender": "FEMALE",
+  "authority": "ADMIN",
+  "year": 1973,
+  "month": 1,
+  "day": 20,
+  "employeeName": "김감독",
+  "heartRateThreshold": 200
+}
+
+### 이상 심박수 지도용 집계 [Admin]
+GET {{DNS_HOST}}/api/v1/fcm/aggregate-heart-report?start=2024-07-19 00:00:00&end=2024-08-01 00:00:00&gps-range=SMALL&emergency=HEART_RATE
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### Login
+### 응답의 data.token을 변수로 받는다.
+POST {{DNS_HOST}}/api/v1/member/login
+Content-Type: application/json
+
+{
+  "loginId": "asdf123456",
+  "password": "asdf12345@",
+  "token": "cUKqqTxtRJmpwFeEP8YMIg:APA91bFqCvtjaHChoCZ83UMt7_gnTwKwgPSM3OC1JT_b11F66gTSYgqMc9LGO_jgkt9b1qCYwGuXvBw-ue1UHV65yfKzvGlOpLv70AqcPiMaN82mQwWSMpCcPM1qMgKdk0tVG6rm6H3t"
+}
+> {% client.global.set("auth_token", response.body.data.token); %}
+
+### report 정렬과 필터가 있는 버전
+GET {{DNS_HOST}}/api/v1/reporting/day-report?page=1&offset=10&report-sorting=MOVE_DESC&report-sorting=KM_ASC&report-condition=HEART_RATE_FILTER
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### 회원 이름으로 Search - 두 글자 이상으로
+GET {{DNS_HOST}}/api/v1/reporting/search?name=홍길
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+### migration
+POST {{DNS_HOST}}/api/v1/reporting/is-over
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}

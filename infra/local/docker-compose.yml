@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: smart-worker-mongo
+    tty: true
+    ports:
+      - "27018:27017"
+    volumes:
+      - "../db/mongo:/data/db"
+    networks:
+      - ${GLOBAL_NETWORK:-mongo}
+  mysql:
+    image: mysql:8.0 # mysql:8 대신, mysql:8.0을 사용해주세요!
+    container_name: smart-worker-mysql
+    environment:
+      MYSQL_DATABASE: smart_worker
+      MYSQL_ROOT_PASSWORD: sj991209
+    ports:
+      - "3307:3306"
+    volumes:
+      - "../db/rdb:/var/lib/mysql"
+    networks:
+      - ${GLOBAL_NETWORK:-mysql}

@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  api-module:
+    container_name: smart-worker-api
+    image: bsj1209/smart-worker:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ${GLOBAL_NETWORK:-api-module}
+  save-heart-rate-module:
+    container_name: save-heart-rate
+    image: bsj1209/save-heart-rate:latest
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ${GLOBAL_NETWORK:-save-heart-rate-module}
