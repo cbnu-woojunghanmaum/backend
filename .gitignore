@@ -51,6 +51,3 @@ out/
 /infra/kafka
 /infra/zookeeper
 
-
-/api-module/src/main/resources/*
-/save-heart-rate-module/src/main/resources/*
