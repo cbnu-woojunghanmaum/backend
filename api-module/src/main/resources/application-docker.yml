@@ -1,0 +1,90 @@
+jwt:
+  secret: Tm92YUhvbWVQYWdlc2FkZmFzZGZhc2RmYXNkZnNhZGY=
+spring:
+  datasource:
+    url: jdbc:mysql://smart-worker-mysql:3306/smart_worker
+    username: root
+    password: sj991209
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    mongodb:
+      auto-index-creation: true
+      host: smart-worker-mongo
+      port: 27017
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - prometheus
+  endpoint:
+    health:
+      show-details: never
+
+# SpringDoc and Swagger UI Configuration
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    display-request-duration: true
+    groups-order: DESC
+    tags-sorter: alpha
+    operations-sorter: method
+  show-actuator: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  writer-with-default-pretty-printer: true
+
+fcm:
+  project-id: smartworker-78dd9
+heart-rate:
+  topic-name: heart-rate
+  step-count: step-count
+
+kafka-config:
+  bootstrap-servers: kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092
+  schema-registry-url-key: schema.registry.url
+  schema-registry-url: http://schema-registry:8081
+  num-of-partitions: 3
+  replication-factor: 3
+
+kafka-producer-config:
+  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
+  value-serializer-class: org.springframework.kafka.support.serializer.JsonSerializer
+  compression-type: snappy
+  acks: all
+  batch-size: 16384
+  batch-size-boost-factor: 100
+  linger-ms: 5
+  request-timeout-ms: 60000
+  retry-count: 5
+
+kafka-consumer-config:
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+  heart-rate-group-id: heart-rate-topic-consumer
+  auto-offset-reset: earliest
+  batch-listener: true
+  auto-startup: true
+  concurrency-level: 3
+  session-timeout-ms: 10000
+  heartbeat-interval-ms: 3000
+  max-poll-interval-ms: 300000
+  max-poll-records: 500
+  max-partition-fetch-bytes-default: 1048576
+  max-partition-fetch-bytes-boost-factor: 1
+  poll-timeout-ms: 150
+aes:
+  key: asdfqwesdf-key
